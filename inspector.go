@@ -77,8 +77,31 @@ func (i *VectorInspector) Cmp(src interface{}, cond inspector.Op, right string, 
 	return nil
 }
 
-func (i *VectorInspector) Loop(_ interface{}, _ inspector.Looper, _ *[]byte, _ ...string) error {
-	// todo implement me
+// todo cover me with test/branch
+func (i *VectorInspector) Loop(src interface{}, l inspector.Looper, buf *[]byte, path ...string) error {
+	var (
+		node *vector.Node
+	)
+	if vec, ok := src.(*vector.Vector); ok {
+		node = vec.Get(path...)
+	} else if root, ok := src.(*vector.Node); ok {
+		node = root.Get(path...)
+	} else {
+		return nil
+	}
+
+	node.Each(func(idx int, child *vector.Node) {
+		if l.RequireKey() {
+			*buf = strconv.AppendInt((*buf)[:0], int64(idx), 10)
+			l.SetKey(buf, &inspector.StaticInspector{})
+		}
+		l.SetVal(child, &VectorInspector{})
+		ctl := l.Iterate()
+		if ctl == inspector.LoopCtlBrk || ctl == inspector.LoopCtlCnt {
+			return
+		}
+	})
+
 	return nil
 }
 
