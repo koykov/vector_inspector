@@ -32,7 +32,7 @@ func (i *VectorInspector) GetTo(src interface{}, buf *interface{}, path ...strin
 	} else {
 		return
 	}
-	*buf = nil
+	*buf = 0
 	if node.Type() != vector.TypeNull {
 		*buf = node
 	}
