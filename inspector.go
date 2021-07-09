@@ -3,6 +3,7 @@ package vector_inspector
 import (
 	"strconv"
 
+	"github.com/koykov/dyntpl"
 	"github.com/koykov/inspector"
 	"github.com/koykov/vector"
 	"github.com/koykov/x2bytes"
@@ -32,10 +33,7 @@ func (i *VectorInspector) GetTo(src interface{}, buf *interface{}, path ...strin
 	} else {
 		return
 	}
-	*buf = 0
-	if node.Type() != vector.TypeNull {
-		*buf = node
-	}
+	*buf = node
 	return
 }
 
@@ -188,4 +186,11 @@ func VectorNodeToBytes(dst []byte, val interface{}) ([]byte, error) {
 	}
 
 	return dst, nil
+}
+
+func VectorNodeEmptyCheck(_ *dyntpl.Ctx, val interface{}) bool {
+	if node, ok := val.(*vector.Node); ok {
+		return node.Type() == vector.TypeNull
+	}
+	return false
 }
