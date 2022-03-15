@@ -3,9 +3,9 @@ module github.com/koykov/vector_inspector
 go 1.16
 
 require (
-	github.com/koykov/dyntpl v0.0.0-20210917212251-6b2a45eb47e8
-	github.com/koykov/inspector v0.0.0-20210709074729-5d3152550e8a
-	github.com/koykov/jsonvector v0.0.0-20210920195111-c7ef59353341
-	github.com/koykov/vector v0.0.0-20210920194725-3ec6f7337e4d
-	github.com/koykov/x2bytes v0.0.0-20210125202922-e56731f1055a
+	github.com/koykov/dyntpl v0.0.0-20211018085844-18f12c449b6f
+	github.com/koykov/inspector v0.0.0-20220315214433-be891e1398f7
+	github.com/koykov/jsonvector v0.0.0-20211011193529-fcb3573fc42b
+	github.com/koykov/vector v0.0.0-20211011193439-9c5197c77b82
+	github.com/koykov/x2bytes v0.0.0-20211030173929-204cb7cc5e84
 )

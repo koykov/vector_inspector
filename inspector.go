@@ -78,7 +78,7 @@ func (i *VectorInspector) Cmp(src interface{}, cond inspector.Op, right string, 
 	return nil
 }
 
-// todo cover me with test/branch
+// todo cover me with test/bench
 func (i *VectorInspector) Loop(src interface{}, l inspector.Looper, buf *[]byte, path ...string) error {
 	var (
 		node *vector.Node
@@ -104,6 +104,16 @@ func (i *VectorInspector) Loop(src interface{}, l inspector.Looper, buf *[]byte,
 	})
 
 	return nil
+}
+
+func (i *VectorInspector) DeepEqual(l, r interface{}) bool {
+	return i.DeepEqualWithOptions(l, r, nil)
+}
+
+func (i *VectorInspector) DeepEqualWithOptions(l, r interface{}, opts *inspector.DEQOptions) bool {
+	_, _, _ = l, r, opts
+	// todo implement me; cover with test/bench
+	return true
 }
 
 func (i *VectorInspector) cmpInt(left int64, cond inspector.Op, right int64) bool {
