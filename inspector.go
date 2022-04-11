@@ -5,12 +5,17 @@ import (
 
 	"github.com/koykov/dyntpl"
 	"github.com/koykov/inspector"
+	"github.com/koykov/jsonvector"
 	"github.com/koykov/vector"
 	"github.com/koykov/x2bytes"
 )
 
 type VectorInspector struct {
 	inspector.BaseInspector
+}
+
+func (i *VectorInspector) TypeName() string {
+	return "vector"
 }
 
 func (i *VectorInspector) Get(src interface{}, path ...string) (interface{}, error) {
@@ -114,6 +119,17 @@ func (i *VectorInspector) DeepEqualWithOptions(l, r interface{}, opts *inspector
 	_, _, _ = l, r, opts
 	// todo implement me; cover with test/bench
 	return true
+}
+
+func (i *VectorInspector) Unmarshal(p []byte, typ inspector.Encoding) (interface{}, error) {
+	switch typ {
+	case inspector.EncodingJSON:
+		vec := jsonvector.NewVector()
+		err := vec.Parse(p)
+		return vec, err
+	default:
+		return nil, inspector.ErrUnknownEncodingType
+	}
 }
 
 func (i *VectorInspector) cmpInt(left int64, cond inspector.Op, right int64) bool {
