@@ -132,6 +132,11 @@ func (i *VectorInspector) Unmarshal(p []byte, typ inspector.Encoding) (interface
 	}
 }
 
+func (i *VectorInspector) Copy(x interface{}) (interface{}, error) {
+	// Vector/node copy is senseless.
+	return x, nil
+}
+
 func (i *VectorInspector) cmpInt(left int64, cond inspector.Op, right int64) bool {
 	switch cond {
 	case inspector.OpEq:
