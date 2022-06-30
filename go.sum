@@ -1,7 +1,8 @@
 github.com/koykov/batch_replace v0.0.0-20210829210916-974d1149f09c h1:n6zYCnzBSfzXovELfCVyCqsPMIyM0p0vQ/I3rd1KpjU=
 github.com/koykov/batch_replace v0.0.0-20210829210916-974d1149f09c/go.mod h1:D1OU8rXkcFw1lS4E3fC4TpNQBgGdeZWTDjra8Lk+9ZA=
-github.com/koykov/bitset v0.0.0-20210528202239-5d218612304f h1:CEBncLM/QwkVimhI/YfI7rAyrCG86o9GpjjkdNZQPnI=
 github.com/koykov/bitset v0.0.0-20210528202239-5d218612304f/go.mod h1:Mg0YlEO6vG0Vd2N5qZhyH1ss2ZuuMZR8iYNKshQcm6I=
+github.com/koykov/bitset v0.0.0-20220630192021-a713ee0d389d h1:b82iiOxU5g1mcgKfmJPg47WGLumM91t9wPNWN1a3DbM=
+github.com/koykov/bitset v0.0.0-20220630192021-a713ee0d389d/go.mod h1:Mg0YlEO6vG0Vd2N5qZhyH1ss2ZuuMZR8iYNKshQcm6I=
 github.com/koykov/bytealg v0.0.0-20210927090650-e39b8a62e232/go.mod h1:GsRL37HNnRhJ5Igs0WV7sIVWo8R7qBB9KJh6wzVUFe0=
 github.com/koykov/bytealg v0.0.0-20220217215334-551fdcce9d6c/go.mod h1:GsRL37HNnRhJ5Igs0WV7sIVWo8R7qBB9KJh6wzVUFe0=
 github.com/koykov/bytealg v0.0.0-20220528213442-ac92b7cc2f07 h1:GNAcqL+VEnO02kTK2F9wBBgLB6TUYESoLJXTtXblnIw=
@@ -27,8 +28,9 @@ github.com/koykov/jsonvector v0.0.0-20220618120152-1ff381a5c89e h1:Hsa0Df9f8YNMc
 github.com/koykov/jsonvector v0.0.0-20220618120152-1ff381a5c89e/go.mod h1:syCHZzKnXV1BNX5tQA608fKz9Eslz70m67x3/l/EgRs=
 github.com/koykov/policy v0.0.0-20201212213550-1b5a0bfb7590 h1:v349mTziKohKSGykodaOr+T2gXLuYtlm6D7isucUjts=
 github.com/koykov/policy v0.0.0-20201212213550-1b5a0bfb7590/go.mod h1:wHHIIRCCjvlBtX4mSGEBALSAlyrdRA02GTk/jBP+ufg=
-github.com/koykov/vector v0.0.0-20220618115905-0a20faf1c725 h1:WMf34vuIy6G6vPRoHKc74IvIczgt2mjyVCsjvFBnU+M=
 github.com/koykov/vector v0.0.0-20220618115905-0a20faf1c725/go.mod h1:Rm3zDevg9qVkK5+RqfEuIUT1SxojtJfbF5VcCmslknY=
+github.com/koykov/vector v0.0.0-20220630192134-147392a4592f h1:8ve4tX/7hX/l0qW4nMLBR2h8Me0UnqVMwqtKhahlfOQ=
+github.com/koykov/vector v0.0.0-20220630192134-147392a4592f/go.mod h1:4/ChDYPn7Q7aVIHOOXdAOFsBZk42gLFTOav55NVsZ+w=
 github.com/koykov/x2bytes v0.0.0-20210125202922-e56731f1055a/go.mod h1:WYC0GA70RW4XAE3FRTVCYmC8UhHO3LEm26g795qn7Jo=
 github.com/koykov/x2bytes v0.0.0-20211030173929-204cb7cc5e84 h1:63PXDfdREZrUYLsuYfdeNvZcMawd51C5U/iONVd4L5M=
 github.com/koykov/x2bytes v0.0.0-20211030173929-204cb7cc5e84/go.mod h1:WYC0GA70RW4XAE3FRTVCYmC8UhHO3LEm26g795qn7Jo=
