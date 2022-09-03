@@ -21,8 +21,8 @@ github.com/koykov/i18n v0.0.0-20220625194504-286e4779580e/go.mod h1:qmMA/wNGxFhC
 github.com/koykov/indirect v0.0.0-20220403200712-f40904459e17 h1:K9ITvibI9twy8SMQzgmJH480JQAHg8lb3UPMZeijr+U=
 github.com/koykov/indirect v0.0.0-20220403200712-f40904459e17/go.mod h1:2qWC0hrIHIexlKaqPA0VWEa0s2V/qxxNJv7XPncnh2I=
 github.com/koykov/inspector v0.0.0-20220608081022-4ed872dcf799/go.mod h1:BH8WHFfITjT9Sd5+UeT3sgRNLfMSLFO3RNCHw/o8Fjc=
-github.com/koykov/inspector v0.0.0-20220802133552-ff6c83492a73 h1:NGqEMd+u/QcXiyxnRndj2sC5HCB2uIedCQlqT/lMDrg=
-github.com/koykov/inspector v0.0.0-20220802133552-ff6c83492a73/go.mod h1:ERr5MbGiNHoyw7XRafAiadvt8SocB272tt96YqMkZm8=
+github.com/koykov/inspector v0.0.0-20220903202309-a024c6c3379a h1:/CyqOthzQKIOS8uUudUKPAVl7jYdDx6nZmn3Q+GfREM=
+github.com/koykov/inspector v0.0.0-20220903202309-a024c6c3379a/go.mod h1:ERr5MbGiNHoyw7XRafAiadvt8SocB272tt96YqMkZm8=
 github.com/koykov/jsonvector v0.0.0-20220812205201-cbf3d110ee2b h1:KiTCQoV49E1/+ek1qoOtjOpb2J9pC5RBkxM7YnVzOY8=
 github.com/koykov/jsonvector v0.0.0-20220812205201-cbf3d110ee2b/go.mod h1:fXnbKXcBXRaZbZfPmTvDHsjH81Lb29QKMBkeI7tDzD0=
 github.com/koykov/policy v0.0.0-20211205213434-fe65faba0cab h1:YBfqX4csQMLncAqrHFIIdnxtiyPW7OjW5KWjv5E/v84=

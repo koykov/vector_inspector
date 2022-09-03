@@ -14,17 +14,17 @@ type VectorInspector struct {
 	inspector.BaseInspector
 }
 
-func (i *VectorInspector) TypeName() string {
+func (i VectorInspector) TypeName() string {
 	return "vector"
 }
 
-func (i *VectorInspector) Get(src interface{}, path ...string) (interface{}, error) {
+func (i VectorInspector) Get(src interface{}, path ...string) (interface{}, error) {
 	var buf interface{}
 	err := i.GetTo(src, &buf, path...)
 	return buf, err
 }
 
-func (i *VectorInspector) GetTo(src interface{}, buf *interface{}, path ...string) (err error) {
+func (i VectorInspector) GetTo(src interface{}, buf *interface{}, path ...string) (err error) {
 	if src == nil {
 		return
 	}
@@ -42,15 +42,15 @@ func (i *VectorInspector) GetTo(src interface{}, buf *interface{}, path ...strin
 	return
 }
 
-func (i *VectorInspector) Set(_, _ interface{}, _ ...string) error {
+func (i VectorInspector) Set(_, _ interface{}, _ ...string) error {
 	return nil
 }
 
-func (i *VectorInspector) SetWB(_, _ interface{}, _ inspector.AccumulativeBuffer, _ ...string) error {
+func (i VectorInspector) SetWB(_, _ interface{}, _ inspector.AccumulativeBuffer, _ ...string) error {
 	return nil
 }
 
-func (i *VectorInspector) Cmp(src interface{}, cond inspector.Op, right string, result *bool, path ...string) error {
+func (i VectorInspector) Cmp(src interface{}, cond inspector.Op, right string, result *bool, path ...string) error {
 	var (
 		node *vector.Node
 	)
@@ -84,7 +84,7 @@ func (i *VectorInspector) Cmp(src interface{}, cond inspector.Op, right string, 
 }
 
 // todo cover me with test/bench
-func (i *VectorInspector) Loop(src interface{}, l inspector.Looper, buf *[]byte, path ...string) error {
+func (i VectorInspector) Loop(src interface{}, l inspector.Looper, buf *[]byte, path ...string) error {
 	var (
 		node *vector.Node
 	)
@@ -111,17 +111,17 @@ func (i *VectorInspector) Loop(src interface{}, l inspector.Looper, buf *[]byte,
 	return nil
 }
 
-func (i *VectorInspector) DeepEqual(l, r interface{}) bool {
+func (i VectorInspector) DeepEqual(l, r interface{}) bool {
 	return i.DeepEqualWithOptions(l, r, nil)
 }
 
-func (i *VectorInspector) DeepEqualWithOptions(l, r interface{}, opts *inspector.DEQOptions) bool {
+func (i VectorInspector) DeepEqualWithOptions(l, r interface{}, opts *inspector.DEQOptions) bool {
 	_, _, _ = l, r, opts
 	// todo implement me; cover with test/bench
 	return true
 }
 
-func (i *VectorInspector) Unmarshal(p []byte, typ inspector.Encoding) (interface{}, error) {
+func (i VectorInspector) Unmarshal(p []byte, typ inspector.Encoding) (interface{}, error) {
 	switch typ {
 	case inspector.EncodingJSON:
 		vec := jsonvector.NewVector()
@@ -132,12 +132,12 @@ func (i *VectorInspector) Unmarshal(p []byte, typ inspector.Encoding) (interface
 	}
 }
 
-func (i *VectorInspector) Copy(x interface{}) (interface{}, error) {
+func (i VectorInspector) Copy(x interface{}) (interface{}, error) {
 	// Vector/node copy is senseless.
 	return x, nil
 }
 
-func (i *VectorInspector) cmpInt(left int64, cond inspector.Op, right int64) bool {
+func (i VectorInspector) cmpInt(left int64, cond inspector.Op, right int64) bool {
 	switch cond {
 	case inspector.OpEq:
 		return left == right
@@ -155,7 +155,7 @@ func (i *VectorInspector) cmpInt(left int64, cond inspector.Op, right int64) boo
 	return false
 }
 
-func (i *VectorInspector) cmpUint(left uint64, cond inspector.Op, right uint64) bool {
+func (i VectorInspector) cmpUint(left uint64, cond inspector.Op, right uint64) bool {
 	switch cond {
 	case inspector.OpEq:
 		return left == right
@@ -173,7 +173,7 @@ func (i *VectorInspector) cmpUint(left uint64, cond inspector.Op, right uint64) 
 	return false
 }
 
-func (i *VectorInspector) cmpFloat(left float64, cond inspector.Op, right float64) bool {
+func (i VectorInspector) cmpFloat(left float64, cond inspector.Op, right float64) bool {
 	switch cond {
 	case inspector.OpEq:
 		return left == right
@@ -191,7 +191,7 @@ func (i *VectorInspector) cmpFloat(left float64, cond inspector.Op, right float6
 	return false
 }
 
-func (i *VectorInspector) cmpStr(left string, cond inspector.Op, right string) bool {
+func (i VectorInspector) cmpStr(left string, cond inspector.Op, right string) bool {
 	switch cond {
 	case inspector.OpEq:
 		return left == right
