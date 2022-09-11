@@ -137,9 +137,9 @@ func (i VectorInspector) Copy(x interface{}) (interface{}, error) {
 	return x, nil
 }
 
-func (i VectorInspector) CopyWB(x interface{}, _ inspector.AccumulativeBuffer) (interface{}, error) {
+func (i VectorInspector) CopyWB(src, dst interface{}, _ inspector.AccumulativeBuffer) error {
 	// Vector/node copy is senseless.
-	return x, nil
+	return nil
 }
 
 func (i VectorInspector) Reset(x interface{}) {
