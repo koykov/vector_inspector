@@ -137,6 +137,11 @@ func (i VectorInspector) Copy(x interface{}) (interface{}, error) {
 	return x, nil
 }
 
+func (i VectorInspector) CopyWB(x interface{}, _ inspector.AccumulativeBuffer) (interface{}, error) {
+	// Vector/node copy is senseless.
+	return x, nil
+}
+
 func (i VectorInspector) cmpInt(left int64, cond inspector.Op, right int64) bool {
 	switch cond {
 	case inspector.OpEq:
