@@ -142,6 +142,14 @@ func (i VectorInspector) CopyWB(x interface{}, _ inspector.AccumulativeBuffer) (
 	return x, nil
 }
 
+func (i VectorInspector) Reset(x interface{}) {
+	if vec, ok := x.(*vector.Vector); ok {
+		vec.Reset()
+	} else if root, ok := x.(*vector.Node); ok {
+		root.Reset()
+	}
+}
+
 func (i VectorInspector) cmpInt(left int64, cond inspector.Op, right int64) bool {
 	switch cond {
 	case inspector.OpEq:
