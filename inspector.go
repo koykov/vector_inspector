@@ -83,8 +83,8 @@ func (i VectorInspector) Cmp(src interface{}, cond inspector.Op, right string, r
 	return nil
 }
 
-// todo cover me with test/bench
 func (i VectorInspector) Loop(src interface{}, l inspector.Looper, buf *[]byte, path ...string) error {
+	// todo cover me with test/bench
 	var (
 		node *vector.Node
 	)
@@ -137,17 +137,21 @@ func (i VectorInspector) Copy(x interface{}) (interface{}, error) {
 	return x, nil
 }
 
-func (i VectorInspector) CopyWB(src, dst interface{}, _ inspector.AccumulativeBuffer) error {
+func (i VectorInspector) CopyTo(src, dst interface{}, _ inspector.AccumulativeBuffer) error {
+	_, _ = src, dst
 	// Vector/node copy is senseless.
 	return nil
 }
 
-func (i VectorInspector) Reset(x interface{}) {
+func (i VectorInspector) Reset(x interface{}) error {
 	if vec, ok := x.(*vector.Vector); ok {
 		vec.Reset()
+		return nil
 	} else if root, ok := x.(*vector.Node); ok {
 		root.Reset()
+		return nil
 	}
+	return inspector.ErrUnsupportedType
 }
 
 func (i VectorInspector) cmpInt(left int64, cond inspector.Op, right int64) bool {
