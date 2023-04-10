@@ -18,13 +18,13 @@ func (i VectorInspector) TypeName() string {
 	return "vector"
 }
 
-func (i VectorInspector) Get(src interface{}, path ...string) (interface{}, error) {
-	var buf interface{}
+func (i VectorInspector) Get(src any, path ...string) (any, error) {
+	var buf any
 	err := i.GetTo(src, &buf, path...)
 	return buf, err
 }
 
-func (i VectorInspector) GetTo(src interface{}, buf *interface{}, path ...string) (err error) {
+func (i VectorInspector) GetTo(src any, buf *any, path ...string) (err error) {
 	if src == nil {
 		return
 	}
@@ -42,15 +42,15 @@ func (i VectorInspector) GetTo(src interface{}, buf *interface{}, path ...string
 	return
 }
 
-func (i VectorInspector) Set(_, _ interface{}, _ ...string) error {
+func (i VectorInspector) Set(_, _ any, _ ...string) error {
 	return nil
 }
 
-func (i VectorInspector) SetWB(_, _ interface{}, _ inspector.AccumulativeBuffer, _ ...string) error {
+func (i VectorInspector) SetWithBuffer(_, _ any, _ inspector.AccumulativeBuffer, _ ...string) error {
 	return nil
 }
 
-func (i VectorInspector) Cmp(src interface{}, cond inspector.Op, right string, result *bool, path ...string) error {
+func (i VectorInspector) Compare(src any, cond inspector.Op, right string, result *bool, path ...string) error {
 	var (
 		node *vector.Node
 	)
@@ -83,11 +83,9 @@ func (i VectorInspector) Cmp(src interface{}, cond inspector.Op, right string, r
 	return nil
 }
 
-func (i VectorInspector) Loop(src interface{}, l inspector.Looper, buf *[]byte, path ...string) error {
+func (i VectorInspector) Loop(src any, l inspector.Iterator, buf *[]byte, path ...string) error {
 	// todo cover me with test/bench
-	var (
-		node *vector.Node
-	)
+	var node *vector.Node
 	if vec, ok := src.(*vector.Vector); ok {
 		node = vec.Get(path...)
 	} else if root, ok := src.(*vector.Node); ok {
@@ -101,7 +99,7 @@ func (i VectorInspector) Loop(src interface{}, l inspector.Looper, buf *[]byte, 
 			*buf = strconv.AppendInt((*buf)[:0], int64(idx), 10)
 			l.SetKey(buf, &inspector.StaticInspector{})
 		}
-		l.SetVal(child, &VectorInspector{})
+		l.SetVal(child, VectorInspector{})
 		ctl := l.Iterate()
 		if ctl == inspector.LoopCtlBrk || ctl == inspector.LoopCtlCnt {
 			return
@@ -111,17 +109,17 @@ func (i VectorInspector) Loop(src interface{}, l inspector.Looper, buf *[]byte, 
 	return nil
 }
 
-func (i VectorInspector) DeepEqual(l, r interface{}) bool {
+func (i VectorInspector) DeepEqual(l, r any) bool {
 	return i.DeepEqualWithOptions(l, r, nil)
 }
 
-func (i VectorInspector) DeepEqualWithOptions(l, r interface{}, opts *inspector.DEQOptions) bool {
+func (i VectorInspector) DeepEqualWithOptions(l, r any, opts *inspector.DEQOptions) bool {
 	_, _, _ = l, r, opts
 	// todo implement me; cover with test/bench
 	return true
 }
 
-func (i VectorInspector) Unmarshal(p []byte, typ inspector.Encoding) (interface{}, error) {
+func (i VectorInspector) Unmarshal(p []byte, typ inspector.Encoding) (any, error) {
 	switch typ {
 	case inspector.EncodingJSON:
 		vec := jsonvector.NewVector()
@@ -132,18 +130,36 @@ func (i VectorInspector) Unmarshal(p []byte, typ inspector.Encoding) (interface{
 	}
 }
 
-func (i VectorInspector) Copy(x interface{}) (interface{}, error) {
+func (i VectorInspector) Copy(x any) (any, error) {
 	// Vector/node copy is senseless.
 	return x, nil
 }
 
-func (i VectorInspector) CopyTo(src, dst interface{}, _ inspector.AccumulativeBuffer) error {
+func (i VectorInspector) CopyTo(src, dst any, _ inspector.AccumulativeBuffer) error {
 	_, _ = src, dst
 	// Vector/node copy is senseless.
 	return nil
 }
 
-func (i VectorInspector) Reset(x interface{}) error {
+func (i VectorInspector) Length(src any, result *int, path ...string) error {
+	var node *vector.Node
+	if vec, ok := src.(*vector.Vector); ok {
+		node = vec.Get(path...)
+	} else if root, ok := src.(*vector.Node); ok {
+		node = root.Get(path...)
+	} else {
+		return nil
+	}
+
+	*result = node.Get(path...).Limit()
+	return nil
+}
+
+func (i VectorInspector) Capacity(src any, result *int, path ...string) error {
+	return i.Length(src, result, path...)
+}
+
+func (i VectorInspector) Reset(x any) error {
 	if vec, ok := x.(*vector.Vector); ok {
 		vec.Reset()
 		return nil
@@ -226,7 +242,7 @@ func (i VectorInspector) cmpStr(left string, cond inspector.Op, right string) bo
 	return false
 }
 
-func VectorNodeToBytes(dst []byte, val interface{}) ([]byte, error) {
+func VectorNodeToBytes(dst []byte, val any) ([]byte, error) {
 	if node, ok := val.(*vector.Node); ok {
 		dst = append(dst, node.Bytes()...)
 	} else {
@@ -236,7 +252,7 @@ func VectorNodeToBytes(dst []byte, val interface{}) ([]byte, error) {
 	return dst, nil
 }
 
-func VectorNodeEmptyCheck(_ *dyntpl.Ctx, val interface{}) bool {
+func VectorNodeEmptyCheck(_ *dyntpl.Ctx, val any) bool {
 	if node, ok := val.(*vector.Node); ok {
 		return node.Type() == vector.TypeNull
 	}
