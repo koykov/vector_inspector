@@ -21,7 +21,7 @@ func TestVectorInspector_Get(t *testing.T) {
 	if err := vec.Parse(vecSrc0); err != nil {
 		t.Error(err)
 	}
-	var buf interface{}
+	var buf any
 
 	_ = ins.GetTo(&vec.Vector, &buf, p0color...)
 	if buf.(*vector.Node).String() != "#c3c3c3" {
@@ -39,7 +39,7 @@ func TestVectorInspector_Get(t *testing.T) {
 	}
 }
 
-func TestVectorInspector_Cmp(t *testing.T) {
+func TestVectorInspector_Compare(t *testing.T) {
 	ins := &VectorInspector{}
 	vec := jsonvector.NewVector()
 	if err := vec.Parse(vecSrc0); err != nil {
@@ -47,17 +47,17 @@ func TestVectorInspector_Cmp(t *testing.T) {
 	}
 	var ok bool
 
-	_ = ins.Cmp(&vec.Vector, inspector.OpLt, "18", &ok, p0margin...)
+	_ = ins.Compare(&vec.Vector, inspector.OpLt, "18", &ok, p0margin...)
 	if !ok {
 		t.Error("inner_margin.value >= 18")
 	}
 
-	_ = ins.Cmp(&vec.Vector, inspector.OpGt, "13", &ok, p0margin...)
+	_ = ins.Compare(&vec.Vector, inspector.OpGt, "13", &ok, p0margin...)
 	if !ok {
 		t.Error("inner_margin.value <= 13")
 	}
 
-	_ = ins.Cmp(&vec.Vector, inspector.OpEq, "15", &ok, p0margin...)
+	_ = ins.Compare(&vec.Vector, inspector.OpEq, "15", &ok, p0margin...)
 	if !ok {
 		t.Error("inner_margin.value != 15")
 	}
@@ -69,7 +69,7 @@ func BenchmarkVectorInspector_Get(b *testing.B) {
 	if err := vec.Parse(vecSrc0); err != nil {
 		b.Error(err)
 	}
-	var buf interface{}
+	var buf any
 
 	b.ReportAllocs()
 
@@ -91,7 +91,7 @@ func BenchmarkVectorInspector_Get(b *testing.B) {
 	}
 }
 
-func BenchmarkVectorInspector_Cmp(b *testing.B) {
+func BenchmarkVectorInspector_Compare(b *testing.B) {
 	ins := &VectorInspector{}
 	vec := jsonvector.NewVector()
 	if err := vec.Parse(vecSrc0); err != nil {
@@ -102,17 +102,17 @@ func BenchmarkVectorInspector_Cmp(b *testing.B) {
 	b.ReportAllocs()
 
 	for i := 0; i < b.N; i++ {
-		_ = ins.Cmp(&vec.Vector, inspector.OpLt, "18", &ok, p0margin...)
+		_ = ins.Compare(&vec.Vector, inspector.OpLt, "18", &ok, p0margin...)
 		if !ok {
 			b.Error("inner_margin.value >= 18")
 		}
 
-		_ = ins.Cmp(&vec.Vector, inspector.OpGt, "13", &ok, p0margin...)
+		_ = ins.Compare(&vec.Vector, inspector.OpGt, "13", &ok, p0margin...)
 		if !ok {
 			b.Error("inner_margin.value <= 13")
 		}
 
-		_ = ins.Cmp(&vec.Vector, inspector.OpEq, "15", &ok, p0margin...)
+		_ = ins.Compare(&vec.Vector, inspector.OpEq, "15", &ok, p0margin...)
 		if !ok {
 			b.Error("inner_margin.value != 15")
 		}
