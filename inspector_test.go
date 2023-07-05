@@ -23,17 +23,17 @@ func TestVectorInspector_Get(t *testing.T) {
 	}
 	var buf any
 
-	_ = ins.GetTo(&vec.Vector, &buf, p0color...)
+	_ = ins.GetTo(vec, &buf, p0color...)
 	if buf.(*vector.Node).String() != "#c3c3c3" {
 		t.Error("color.value mismatch: need #c3c3c3, got", buf)
 	}
 
-	_ = ins.GetTo(&vec.Vector, &buf, p0margin...)
+	_ = ins.GetTo(vec, &buf, p0margin...)
 	if n, _ := buf.(*vector.Node).Int(); n != 15 {
 		t.Error("inner_margin.value mismatch: need 15, got", buf)
 	}
 
-	_ = ins.GetTo(&vec.Vector, &buf, p0desc...)
+	_ = ins.GetTo(vec, &buf, p0desc...)
 	if !buf.(*vector.Node).Bool() {
 		t.Error("need_desc.value mismatch: need 15, got", buf)
 	}
@@ -47,17 +47,17 @@ func TestVectorInspector_Compare(t *testing.T) {
 	}
 	var ok bool
 
-	_ = ins.Compare(&vec.Vector, inspector.OpLt, "18", &ok, p0margin...)
+	_ = ins.Compare(vec, inspector.OpLt, "18", &ok, p0margin...)
 	if !ok {
 		t.Error("inner_margin.value >= 18")
 	}
 
-	_ = ins.Compare(&vec.Vector, inspector.OpGt, "13", &ok, p0margin...)
+	_ = ins.Compare(vec, inspector.OpGt, "13", &ok, p0margin...)
 	if !ok {
 		t.Error("inner_margin.value <= 13")
 	}
 
-	_ = ins.Compare(&vec.Vector, inspector.OpEq, "15", &ok, p0margin...)
+	_ = ins.Compare(vec, inspector.OpEq, "15", &ok, p0margin...)
 	if !ok {
 		t.Error("inner_margin.value != 15")
 	}
@@ -74,17 +74,17 @@ func BenchmarkVectorInspector_Get(b *testing.B) {
 	b.ReportAllocs()
 
 	for i := 0; i < b.N; i++ {
-		_ = ins.GetTo(&vec.Vector, &buf, p0color...)
+		_ = ins.GetTo(vec, &buf, p0color...)
 		if buf.(*vector.Node).String() != "#c3c3c3" {
 			b.Error("color.value mismatch: need #c3c3c3, got", buf)
 		}
 
-		_ = ins.GetTo(&vec.Vector, &buf, p0margin...)
+		_ = ins.GetTo(vec, &buf, p0margin...)
 		if n, _ := buf.(*vector.Node).Int(); n != 15 {
 			b.Error("inner_margin.value mismatch: need 15, got", buf)
 		}
 
-		_ = ins.GetTo(&vec.Vector, &buf, p0desc...)
+		_ = ins.GetTo(vec, &buf, p0desc...)
 		if !buf.(*vector.Node).Bool() {
 			b.Error("need_desc.value mismatch: need 15, got", buf)
 		}
@@ -102,17 +102,17 @@ func BenchmarkVectorInspector_Compare(b *testing.B) {
 	b.ReportAllocs()
 
 	for i := 0; i < b.N; i++ {
-		_ = ins.Compare(&vec.Vector, inspector.OpLt, "18", &ok, p0margin...)
+		_ = ins.Compare(vec, inspector.OpLt, "18", &ok, p0margin...)
 		if !ok {
 			b.Error("inner_margin.value >= 18")
 		}
 
-		_ = ins.Compare(&vec.Vector, inspector.OpGt, "13", &ok, p0margin...)
+		_ = ins.Compare(vec, inspector.OpGt, "13", &ok, p0margin...)
 		if !ok {
 			b.Error("inner_margin.value <= 13")
 		}
 
-		_ = ins.Compare(&vec.Vector, inspector.OpEq, "15", &ok, p0margin...)
+		_ = ins.Compare(vec, inspector.OpEq, "15", &ok, p0margin...)
 		if !ok {
 			b.Error("inner_margin.value != 15")
 		}

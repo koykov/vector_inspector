@@ -31,7 +31,9 @@ func (i VectorInspector) GetTo(src any, buf *any, path ...string) (err error) {
 	var (
 		node *vector.Node
 	)
-	if vec, ok := src.(*vector.Vector); ok {
+	if vec, ok := src.(vector.Interface); ok && vec != nil {
+		node = vec.Get(path...)
+	} else if vec, ok = src.(*vector.Vector); ok {
 		node = vec.Get(path...)
 	} else if root, ok := src.(*vector.Node); ok {
 		node = root.Get(path...)
@@ -43,10 +45,12 @@ func (i VectorInspector) GetTo(src any, buf *any, path ...string) (err error) {
 }
 
 func (i VectorInspector) Set(_, _ any, _ ...string) error {
+	// Vector is read-only struct.
 	return nil
 }
 
 func (i VectorInspector) SetWithBuffer(_, _ any, _ inspector.AccumulativeBuffer, _ ...string) error {
+	// Vector is read-only struct.
 	return nil
 }
 
@@ -54,7 +58,9 @@ func (i VectorInspector) Compare(src any, cond inspector.Op, right string, resul
 	var (
 		node *vector.Node
 	)
-	if vec, ok := src.(*vector.Vector); ok {
+	if vec, ok := src.(vector.Interface); ok && vec != nil {
+		node = vec.Get(path...)
+	} else if vec, ok = src.(*vector.Vector); ok {
 		node = vec.Get(path...)
 	} else if root, ok := src.(*vector.Node); ok {
 		node = root.Get(path...)
@@ -86,7 +92,9 @@ func (i VectorInspector) Compare(src any, cond inspector.Op, right string, resul
 func (i VectorInspector) Loop(src any, l inspector.Iterator, buf *[]byte, path ...string) error {
 	// todo cover me with test/bench
 	var node *vector.Node
-	if vec, ok := src.(*vector.Vector); ok {
+	if vec, ok := src.(vector.Interface); ok && vec != nil {
+		node = vec.Get(path...)
+	} else if vec, ok = src.(*vector.Vector); ok {
 		node = vec.Get(path...)
 	} else if root, ok := src.(*vector.Node); ok {
 		node = root.Get(path...)
@@ -97,7 +105,7 @@ func (i VectorInspector) Loop(src any, l inspector.Iterator, buf *[]byte, path .
 	node.Each(func(idx int, child *vector.Node) {
 		if l.RequireKey() {
 			*buf = strconv.AppendInt((*buf)[:0], int64(idx), 10)
-			l.SetKey(buf, &inspector.StaticInspector{})
+			l.SetKey(buf, inspector.StaticInspector{})
 		}
 		l.SetVal(child, VectorInspector{})
 		ctl := l.Iterate()
@@ -143,7 +151,9 @@ func (i VectorInspector) CopyTo(src, dst any, _ inspector.AccumulativeBuffer) er
 
 func (i VectorInspector) Length(src any, result *int, path ...string) error {
 	var node *vector.Node
-	if vec, ok := src.(*vector.Vector); ok {
+	if vec, ok := src.(vector.Interface); ok && vec != nil {
+		node = vec.Get(path...)
+	} else if vec, ok = src.(*vector.Vector); ok {
 		node = vec.Get(path...)
 	} else if root, ok := src.(*vector.Node); ok {
 		node = root.Get(path...)
@@ -160,7 +170,10 @@ func (i VectorInspector) Capacity(src any, result *int, path ...string) error {
 }
 
 func (i VectorInspector) Reset(x any) error {
-	if vec, ok := x.(*vector.Vector); ok {
+	if vec, ok := x.(vector.Interface); ok && vec != nil {
+		vec.Reset()
+		return nil
+	} else if vec, ok = x.(*vector.Vector); ok {
 		vec.Reset()
 		return nil
 	} else if root, ok := x.(*vector.Node); ok {
