@@ -83,7 +83,7 @@ func TestVectorInspector(t *testing.T) {
 	})
 }
 
-func BenchmarkVectorInspector_Get(b *testing.B) {
+func BenchmarkVectorInspector(b *testing.B) {
 	b.Run("get", func(b *testing.B) {
 		ins := VectorInspector{}
 		vec := jsonvector.NewVector()
@@ -135,6 +135,30 @@ func BenchmarkVectorInspector_Get(b *testing.B) {
 			_ = ins.Compare(vec, inspector.OpEq, "15", &ok, p0margin...)
 			if !ok {
 				b.Error("inner_margin.value != 15")
+			}
+		}
+	})
+	b.Run("compare", func(b *testing.B) {
+		b.ReportAllocs()
+		a, b_ := jsonvector.NewVector(), jsonvector.NewVector()
+		_ = a.Parse(vecSrc0)
+		_ = b_.Parse(vecSrc0)
+		var ins VectorInspector
+		for i := 0; i < b.N; i++ {
+			if !ins.DeepEqual(a, b_) {
+				b.FailNow()
+			}
+		}
+	})
+	b.Run("compare", func(b *testing.B) {
+		b.ReportAllocs()
+		a, b_ := jsonvector.NewVector(), jsonvector.NewVector()
+		_ = a.Parse(vecSrc0)
+		_ = b_.Parse(vecSrc1)
+		var ins VectorInspector
+		for i := 0; i < b.N; i++ {
+			if ins.DeepEqual(a, b_) {
+				b.FailNow()
 			}
 		}
 	})
