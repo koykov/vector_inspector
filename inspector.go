@@ -121,10 +121,31 @@ func (i VectorInspector) DeepEqual(l, r any) bool {
 	return i.DeepEqualWithOptions(l, r, nil)
 }
 
-func (i VectorInspector) DeepEqualWithOptions(l, r any, opts *inspector.DEQOptions) bool {
-	_, _, _ = l, r, opts
-	// todo implement me; cover with test/bench
-	return true
+func (i VectorInspector) DeepEqualWithOptions(l, r any, _ *inspector.DEQOptions) bool {
+	var a, b *vector.Node
+	if vec, ok := l.(vector.Interface); ok && vec != nil {
+		a = vec.Root()
+	} else if vec, ok = l.(*vector.Vector); ok {
+		a = vec.Root()
+	} else if root, ok := l.(*vector.Node); ok {
+		a = root
+	} else {
+		return false
+	}
+
+	if vec, ok := r.(vector.Interface); ok && vec != nil {
+		b = vec.Root()
+	} else if vec, ok = r.(*vector.Vector); ok {
+		b = vec.Root()
+	} else if root, ok := r.(*vector.Node); ok {
+		b = root
+	} else {
+		return false
+	}
+
+	_, _ = a, b
+	ok := a.EqualWith(b)
+	return ok
 }
 
 func (i VectorInspector) Unmarshal(p []byte, typ inspector.Encoding) (any, error) {
