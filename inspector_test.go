@@ -10,6 +10,7 @@ import (
 
 var (
 	vecSrc0  = []byte(`{"color":{"value":"#c3c3c3"},"bgcolor":{"value":"#ffffff"},"inner_margin":{"value":15},"inner_padding":{"value":5},"border":{"value":"1 px solid #ccc"},"need_desc":{"value":true}}`)
+	vecSrc1  = []byte(`{"color":{"value":"#c3c3c3"},"bgcolor":{"value":"#ffffff"},"inner_margin":{"value":15},"inner_padding":{"value":1500},"border":{"value":"1 px solid #ccc"},"need_desc":{"value":true}}`)
 	p0color  = []string{"color", "value"}
 	p0margin = []string{"inner_margin", "value"}
 	p0desc   = []string{"need_desc", "value"}
@@ -60,6 +61,24 @@ func TestVectorInspector(t *testing.T) {
 		_ = ins.Compare(vec, inspector.OpEq, "15", &ok, p0margin...)
 		if !ok {
 			t.Error("inner_margin.value != 15")
+		}
+	})
+	t.Run("compare", func(t *testing.T) {
+		a, b := jsonvector.NewVector(), jsonvector.NewVector()
+		_ = a.Parse(vecSrc0)
+		_ = b.Parse(vecSrc0)
+		var ins VectorInspector
+		if !ins.DeepEqual(a, b) {
+			t.FailNow()
+		}
+	})
+	t.Run("compare", func(t *testing.T) {
+		a, b := jsonvector.NewVector(), jsonvector.NewVector()
+		_ = a.Parse(vecSrc0)
+		_ = b.Parse(vecSrc1)
+		var ins VectorInspector
+		if ins.DeepEqual(a, b) {
+			t.FailNow()
 		}
 	})
 }

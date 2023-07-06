@@ -6,7 +6,7 @@ require (
 	github.com/koykov/dyntpl v1.1.5-1
 	github.com/koykov/inspector v1.4.2
 	github.com/koykov/jsonvector v1.2.1
-	github.com/koykov/vector v1.2.2
+	github.com/koykov/vector v1.2.3-0.20230706184221-04e0ed395602
 	github.com/koykov/x2bytes v1.0.1
 )
 

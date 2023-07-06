@@ -26,8 +26,8 @@ github.com/koykov/inspector v1.4.2 h1:AjZCYZrIcWecvaExgXnJvmz39ffzXrKY9JD940SBV1
 github.com/koykov/inspector v1.4.2/go.mod h1:XfvCDWM9ZXAl04hGOKkNKIDt7JovBRW6WR0Qaq6bnBo=
 github.com/koykov/jsonvector v1.2.1 h1:YbFCX+HukrW7EWDKIdAuT7zF91WUGgcQ/KLvbPCDF24=
 github.com/koykov/jsonvector v1.2.1/go.mod h1:gfb+CLxwZoyQ25k8i+xDuz+EW5eRy4UzcnbWo5ycBjw=
-github.com/koykov/vector v1.2.2 h1:VWDNjxGPHlRIfleigPliNuCLyGtkmBzH9kXHeo/a5VY=
-github.com/koykov/vector v1.2.2/go.mod h1:taIaBTVvLApbghwTnYu71CQLGLV9i2OhAo48JIr+OJI=
+github.com/koykov/vector v1.2.3-0.20230706184221-04e0ed395602 h1:VDzf3db86BG2a57qwkrvssxVe5LZ+hql/T4CXLPT3RI=
+github.com/koykov/vector v1.2.3-0.20230706184221-04e0ed395602/go.mod h1:taIaBTVvLApbghwTnYu71CQLGLV9i2OhAo48JIr+OJI=
 github.com/koykov/x2bytes v1.0.1 h1:kfo9Pqmip+6s6zbQYgeNSgOA3UbyQNVmaCzkMrJdTME=
 github.com/koykov/x2bytes v1.0.1/go.mod h1:5VHo/Vc0NsGBvzwg5wMrCNrI+fL+DbSUgFW4FVRzlzs=
 golang.org/x/mod v0.9.0 h1:KENHtAZL2y3NLMYZeHY9DW8HW8V+kQyJsY/V9JlKvCs=
