@@ -90,7 +90,6 @@ func (i VectorInspector) Compare(src any, cond inspector.Op, right string, resul
 }
 
 func (i VectorInspector) Loop(src any, l inspector.Iterator, buf *[]byte, path ...string) error {
-	// todo cover me with test/bench
 	var node *vector.Node
 	if vec, ok := src.(vector.Interface); ok && vec != nil {
 		node = vec.Get(path...)
