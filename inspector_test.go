@@ -3,6 +3,7 @@ package vector_inspector
 import (
 	"testing"
 
+	"github.com/koykov/fastconv"
 	"github.com/koykov/inspector"
 	"github.com/koykov/jsonvector"
 	"github.com/koykov/vector"
@@ -14,7 +15,42 @@ var (
 	p0color  = []string{"color", "value"}
 	p0margin = []string{"inner_margin", "value"}
 	p0desc   = []string{"need_desc", "value"}
+	loopSrc  = []byte(`{"a":{"b":{"c":["foo","bar","string"]}}}`)
+	loopExp  = []testExp{{"0", "foo"}, {"1", "bar"}, {"2", "string"}}
 )
+
+type testVI struct {
+	val any
+	ins inspector.Inspector
+}
+
+type testExp struct{ key, val string }
+
+type testIterator struct {
+	tb  testing.TB
+	key testVI
+	val testVI
+	exp []testExp
+	c   int
+}
+
+func (i *testIterator) RequireKey() bool                        { return true }
+func (i *testIterator) SetKey(val any, ins inspector.Inspector) { i.key = testVI{val: val, ins: ins} }
+func (i *testIterator) SetVal(val any, ins inspector.Inspector) { i.val = testVI{val: val, ins: ins} }
+func (i *testIterator) Iterate() inspector.LoopCtl {
+	exp := i.exp[i.c]
+	key := fastconv.B2S(*i.key.val.(*[]byte))
+	val := i.val.val.(*vector.Node).String()
+	if exp.key != key {
+		i.tb.Errorf("key mismatch: need '%s' got '%s'", exp.key, key)
+	}
+	if exp.val != val {
+		i.tb.Errorf("val mismatch: need '%s' got '%s'", exp.val, val)
+	}
+	i.c++
+	return inspector.LoopCtlNone
+}
+func (i *testIterator) reset() { i.c = 0 }
 
 func TestVectorInspector(t *testing.T) {
 	t.Run("get", func(t *testing.T) {
@@ -80,6 +116,14 @@ func TestVectorInspector(t *testing.T) {
 		if ins.DeepEqual(a, b) {
 			t.FailNow()
 		}
+	})
+	t.Run("loop", func(t *testing.T) {
+		ins := VectorInspector{}
+		vec := jsonvector.NewVector()
+		var buf []byte
+		_ = vec.Parse(loopSrc)
+		it := testIterator{tb: t, exp: loopExp}
+		_ = ins.Loop(vec, &it, &buf, "a", "b", "c")
 	})
 }
 
@@ -160,6 +204,20 @@ func BenchmarkVectorInspector(b *testing.B) {
 			if ins.DeepEqual(a, b_) {
 				b.FailNow()
 			}
+		}
+	})
+	b.Run("loop", func(b *testing.B) {
+		b.ReportAllocs()
+		ins := VectorInspector{}
+		vec := jsonvector.NewVector()
+		var buf []byte
+		path := []string{"a", "b", "c"}
+		_ = vec.Parse(loopSrc)
+		it := testIterator{tb: b, exp: loopExp}
+		for i := 0; i < b.N; i++ {
+			buf = buf[:0]
+			_ = ins.Loop(vec, &it, &buf, path...)
+			it.reset()
 		}
 	})
 }
