@@ -7,7 +7,14 @@ import (
 )
 
 func init() {
-	inspector.RegisterInspector("vector", &VectorInspector{})
+	inspector.RegisterInspector("vector", VectorInspector{})
+
 	dyntpl.RegisterEmptyCheckFn("vector_node", VectorNodeEmptyCheck)
+	_ = dyntpl.RegisterPool("jsonvector", &jsonPool{})
+	_ = dyntpl.RegisterPool("urlvector", &urlPool{})
+	_ = dyntpl.RegisterPool("halvector", &halPool{})
+	_ = dyntpl.RegisterPool("xmlvector", &halPool{})
+	// todo: register yamlvector
+
 	x2bytes.RegisterToBytesFn(VectorNodeToBytes)
 }
