@@ -5,13 +5,10 @@ go 1.18
 require (
 	github.com/koykov/dyntpl v1.1.6
 	github.com/koykov/fastconv v1.0.2
-	github.com/koykov/halvector v1.0.4
 	github.com/koykov/inspector v1.4.4
 	github.com/koykov/jsonvector v1.2.1
-	github.com/koykov/urlvector v1.1.5
 	github.com/koykov/vector v1.2.3
 	github.com/koykov/x2bytes v1.0.1
-	github.com/koykov/xmlvector v1.0.1
 )
 
 require (
