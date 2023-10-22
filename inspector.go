@@ -3,7 +3,6 @@ package vector_inspector
 import (
 	"strconv"
 
-	"github.com/koykov/dyntpl"
 	"github.com/koykov/inspector"
 	"github.com/koykov/jsonvector"
 	"github.com/koykov/vector"
@@ -283,11 +282,4 @@ func VectorNodeToBytes(dst []byte, val any) ([]byte, error) {
 	}
 
 	return dst, nil
-}
-
-func VectorNodeEmptyCheck(_ *dyntpl.Ctx, val any) bool {
-	if node, ok := val.(*vector.Node); ok {
-		return node.Type() == vector.TypeNull
-	}
-	return false
 }
