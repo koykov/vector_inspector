@@ -3,7 +3,7 @@ package vector_inspector
 import (
 	"testing"
 
-	"github.com/koykov/fastconv"
+	"github.com/koykov/byteconv"
 	"github.com/koykov/inspector"
 	"github.com/koykov/jsonvector"
 	"github.com/koykov/vector"
@@ -39,7 +39,7 @@ func (i *testIterator) SetKey(val any, ins inspector.Inspector) { i.key = testVI
 func (i *testIterator) SetVal(val any, ins inspector.Inspector) { i.val = testVI{val: val, ins: ins} }
 func (i *testIterator) Iterate() inspector.LoopCtl {
 	exp := i.exp[i.c]
-	key := fastconv.B2S(*i.key.val.(*[]byte))
+	key := byteconv.B2S(*i.key.val.(*[]byte))
 	val := i.val.val.(*vector.Node).String()
 	if exp.key != key {
 		i.tb.Errorf("key mismatch: need '%s' got '%s'", exp.key, key)
