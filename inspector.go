@@ -216,8 +216,9 @@ func (i VectorInspector) cmpInt(left int64, cond inspector.Op, right int64) bool
 		return left < right
 	case inspector.OpLtq:
 		return left <= right
+	default:
+		return false
 	}
-	return false
 }
 
 func (i VectorInspector) cmpUint(left uint64, cond inspector.Op, right uint64) bool {
@@ -234,8 +235,9 @@ func (i VectorInspector) cmpUint(left uint64, cond inspector.Op, right uint64) b
 		return left < right
 	case inspector.OpLtq:
 		return left <= right
+	default:
+		return false
 	}
-	return false
 }
 
 func (i VectorInspector) cmpFloat(left float64, cond inspector.Op, right float64) bool {
@@ -252,8 +254,9 @@ func (i VectorInspector) cmpFloat(left float64, cond inspector.Op, right float64
 		return left < right
 	case inspector.OpLtq:
 		return left <= right
+	default:
+		return false
 	}
-	return false
 }
 
 func (i VectorInspector) cmpStr(left string, cond inspector.Op, right string) bool {
@@ -270,11 +273,12 @@ func (i VectorInspector) cmpStr(left string, cond inspector.Op, right string) bo
 		return left < right
 	case inspector.OpLtq:
 		return left <= right
+	default:
+		return false
 	}
-	return false
 }
 
-func VectorNodeToBytes(dst []byte, val any) ([]byte, error) {
+func VectorNodeToBytes(dst []byte, val any, _ ...any) ([]byte, error) {
 	if node, ok := val.(*vector.Node); ok {
 		dst = append(dst, node.Bytes()...)
 	} else {
