@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/koykov/byteconv v1.0.1
-	github.com/koykov/inspector v1.4.8
+	github.com/koykov/inspector v1.4.11-0.20251026135625-5f6706b32553
 	github.com/koykov/jsonvector v1.2.5
 	github.com/koykov/vector v1.2.6
 	github.com/koykov/x2bytes v1.0.3
