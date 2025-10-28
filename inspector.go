@@ -188,15 +188,15 @@ func (i VectorInspector) Capacity(src any, result *int, path ...string) error {
 	return i.Length(src, result, path...)
 }
 
-func (i VectorInspector) Reset(x any) error {
+func (i VectorInspector) Reset(x any, path ...string) error {
 	if vec, ok := x.(vector.Interface); ok && vec != nil {
-		vec.Reset()
+		vec.Get(path...).Reset()
 		return nil
 	} else if vec, ok = x.(*vector.Vector); ok {
-		vec.Reset()
+		vec.Get(path...).Reset()
 		return nil
 	} else if root, ok := x.(*vector.Node); ok {
-		root.Reset()
+		root.Get(path...).Reset()
 		return nil
 	}
 	return inspector.ErrUnsupportedType
