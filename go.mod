@@ -1,6 +1,6 @@
 module github.com/koykov/vector_inspector
 
-go 1.24.0
+go 1.18
 
 require (
 	github.com/koykov/byteconv v1.0.1
@@ -17,5 +17,5 @@ require (
 	github.com/koykov/entry v1.0.2 // indirect
 	github.com/koykov/indirect v1.0.1 // indirect
 	github.com/koykov/openrt v0.0.0-20240728195600-ccc3242946f9 // indirect
-	golang.org/x/tools v0.38.0 // indirect
+	golang.org/x/tools v0.24.0 // indirect
 )
