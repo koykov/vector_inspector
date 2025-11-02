@@ -69,9 +69,9 @@ func (i VectorInspector) Compare(src any, cond inspector.Op, right string, resul
 	}
 
 	switch node.Type() {
-	case vector.TypeStr, vector.TypeAttr, vector.TypeBool:
+	case vector.TypeString, vector.TypeAttribute, vector.TypeBool:
 		*result = i.cmpStr(node.String(), cond, right)
-	case vector.TypeNum:
+	case vector.TypeNumber:
 		if r, err := strconv.ParseInt(right, 0, 0); err == nil {
 			n, _ := node.Int()
 			*result = i.cmpInt(n, cond, r)
